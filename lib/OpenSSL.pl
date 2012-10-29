@@ -58,13 +58,23 @@ sub newKey
  openSSL('genrsa', {out=>'key'}, $::CFG{Job}->valueOf('req', 'default_bits')||1024);
 }
 
+sub genPass
+{
+ my $fh;
+ open $fh, '<', '/dev/urandom';
+ my $p;
+ sysread $fh, $p, 8;
+ close $fh;
+ return substr(sha1_hex($p), -8);
+}
+
 sub storeKey
 {
  my $p=$::CFG{Job}->valueOf('post', 'password');
 
  if('+' eq $p or 'generate' eq lc($p))
  {
-  $p=substr(sha1_hex($::CFG{tmp}), -8);
+  $p=genPass();
   print "Secret key encrypted with password '$p'\n";
  }
 
