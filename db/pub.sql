@@ -27,7 +27,8 @@ Create Index iSerial On Attrs(serial);
 Create Table Log(
  id	Integer Primary Key,
  src	Text,
- job	Text
+ job	Text,
+ req	Text
 );
 
 Create Table CA(
