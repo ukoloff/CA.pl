@@ -24,13 +24,6 @@ Create Index iBefore On Attrs(notBefore);
 Create Index iAfter On Attrs(notAfter);
 Create Index iSerial On Attrs(serial);
 
-Create Table Log(
- id	Integer Primary Key,
- src	Text,
- job	Text,
- req	Text
-);
-
 Create Table CA(
  id	Integer Primary Key AutoIncrement,
  CN	VarChar(60) Unique,

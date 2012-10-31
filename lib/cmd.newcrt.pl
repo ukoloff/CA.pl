@@ -20,7 +20,6 @@ $::CFG{db}{pub}->do("Insert Into Certs(Key, Issuer, BLOB) Values(?, ?, ?)", unde
 my $N=$::CFG{db}{pub}->sqlite_last_insert_rowid;
 updateSerial();
 storeAttrs($N);
-storeLog($N);
 storeCA($N);
 
 1;

@@ -21,6 +21,5 @@ $::CFG{db}{pub}->do("Insert Into Certs(Issuer, BLOB) Values(?, ?)", undef, $crtN
 my $N=$::CFG{db}{pub}->sqlite_last_insert_rowid;
 updateSerial();
 storeAttrs($N);
-$::CFG{db}{pub}->do("Insert Into Log(id, src, job, req) Values(?, ?, ?, ?)", undef, $N, readFile('src'), readFile('conf'), readFile('req'));
 
 1;

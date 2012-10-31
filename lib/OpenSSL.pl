@@ -152,10 +152,4 @@ sub storeCA
  print "New CA '$ca' created. It's time to create/edit $::CFG{root}/template/ca/$ca.conf\n";
 }
 
-sub storeLog
-{
- my $N=shift;
- $::CFG{db}{pub}->do("Insert Into Log(id, src, job) Values(?, ?, ?)", undef, $N, readFile('src'), readFile('conf'));
-}
-
 1;
