@@ -4,6 +4,7 @@ Lib('Sandbox');
 Lib('Template');
 Lib('DB');
 Lib('OpenSSL');
+Lib('Export');
 
 # Load Template by name
 sub tLoad

@@ -21,5 +21,6 @@ my $N=$::CFG{db}{pub}->sqlite_last_insert_rowid;
 updateSerial();
 storeAttrs($N);
 storeCA($N);
+exportCrt($N);
 
 1;

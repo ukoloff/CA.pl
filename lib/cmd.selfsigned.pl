@@ -23,5 +23,6 @@ my $N=$::CFG{db}{pub}->sqlite_last_insert_rowid;
 $::CFG{db}{pub}->do("Update Certs Set Issuer=id Where id=?", undef, $N);
 storeAttrs($N);
 storeCA($N);
+exportCrt($N);
 
 1;

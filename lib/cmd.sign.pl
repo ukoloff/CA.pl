@@ -21,5 +21,6 @@ $::CFG{db}{pub}->do("Insert Into Certs(Issuer, BLOB) Values(?, ?)", undef, $crtN
 my $N=$::CFG{db}{pub}->sqlite_last_insert_rowid;
 updateSerial();
 storeAttrs($N);
+exportCrt($N);
 
 1;
