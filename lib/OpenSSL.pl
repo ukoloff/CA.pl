@@ -60,12 +60,7 @@ sub newKey
 
 sub genPass
 {
- my $fh;
- open $fh, '<', '/dev/urandom';
- my $p;
- sysread $fh, $p, 8;
- close $fh;
- return substr(sha1_hex($p), -8);
+ return substr(randomHash(), -8);
 }
 
 sub storeKey

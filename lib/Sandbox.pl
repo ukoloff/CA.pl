@@ -1,6 +1,7 @@
 use strict;
 
 use Digest::SHA1  qw(sha1_hex);
+use Time::HiRes;
 
 my $p="$::CFG{root}/tmp";
 -d $p	or mkdir $p;
@@ -9,17 +10,22 @@ $p.='/';
 
 while(1)
 {
- my $fh;
- open $fh, '<', '/dev/urandom';
- my $q;
- sysread $fh, $q, 4;
- close $fh;
- $q=$p.substr(sha1_hex($q), -12).$$;
+ my  $q=$p.substr(randomHash(), -12).$$;
  -d $q	and next;
  mkdir $q;
  chmod 0700, $q;
  $::CFG{tmp}="$q/";
  last;
+}
+
+sub randomHash
+{
+ my $fh;
+ open $fh, '<', '/dev/urandom';
+ my $q;
+ sysread $fh, $q, 4;
+ close $fh;
+ return sha1_hex($q.Time::HiRes::gettimeofday);
 }
 
 sub resolveFile
