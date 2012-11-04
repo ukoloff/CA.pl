@@ -35,7 +35,13 @@ sub randomSerial
  return	unless $::CFG{Job}->valueOf('ini', 'serial')=~m|^random(/(\d+))?$|i;
  my $n=$2||8;
  $::CFG{randomSerial}=$n;
- return substr(randomHash, -2*$n);
+ my $x=$::CFG{db}{pub}->prepare("Select Count(*) From Attrs Where serial=?");
+ while(1)
+ {
+  my $s=substr(randomHash, -2*$n);
+  $x->execute($s);
+  return $s	unless $x->fetchrow_arrayref->[0];
+ }
 }
 
 sub putCA
