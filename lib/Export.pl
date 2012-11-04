@@ -18,7 +18,7 @@ sub exportCrt
   crtExport($1), next	if($x=~/^crt([+])?/);
   p7bExport($1), next	if($x=~/^p7b([+])?/);
   pemExport($1), next	if($x=~/^pem([+])?/);
-  pfxExport($1, $2), next	if($x=~/^pfx([+])?(\/.*)?/);
+  pfxExport($1, $3), next	if($x=~/^pfx([+])?(\/(.*))?/);
   print "Ignored unknown export format '$x'\n";
  }
 }
@@ -97,15 +97,12 @@ sub pfxExport
  unless(-f resolveFile('key')){print "Key to export not found!\n"; return; }
 
  my @cmd=(qw(pkcs12 -export -passout), "file:".resolveFile('pfxPass'));
- if($pass=~s|^/||)
+ if('?' eq $pass)
  {
-  if('?' eq $pass)
-  {
-   print "OpenSSL will prompt you for PFX password now:\n";
-   pop(@cmd); pop(@cmd);
-  }
+  print "OpenSSL will prompt you for PFX password now:\n";
+  pop(@cmd); pop(@cmd);
  }
- else
+ elsif(!$pass)
  {
   $pass=substr(randomHash(), -8);
   print "PFX will be encrypted with '$pass' password.\n";
