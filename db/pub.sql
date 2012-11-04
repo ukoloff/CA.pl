@@ -4,6 +4,7 @@ Create Table Certs(
  Key	Integer,
  ctime	DateTime Default CURRENT_TIMESTAMP,
  Revoke	DateTime,
+ revokeReson	Text,
  BLOB	Text
 );
 
