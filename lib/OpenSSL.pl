@@ -30,6 +30,14 @@ sub readSSL
  return $f;
 }
 
+sub randomSerial
+{
+ return	unless $::CFG{Job}->valueOf('ini', 'serial')=~m|^random(/(\d+))?$|i;
+ my $n=$2||8;
+ $::CFG{randomSerial}=$n;
+ return substr(randomHash, -2*$n);
+}
+
 sub putCA
 {
  my $R=$::CFG{db}{pub}->selectrow_hashref(<<SQL, undef, $::CFG{ca});
@@ -39,7 +47,7 @@ From CA, Certs
 Where CA.x509=Certs.id And CN=?
 SQL
  die "Cannot find CA '$::CFG{ca}' in DB!\n"	unless $R;
- writeFile('serial', $R->{serial});
+ writeFile('serial', randomSerial || $R->{serial});
  writeFile('ca.crt', $R->{BLOB});
  writeFile('index', '');
  writeFile('ca.key', ($::CFG{db}{sec}->selectrow_array("Select BLOB From Keys Where id=?", undef, $R->{Key}))[0]);
@@ -48,6 +56,7 @@ SQL
 
 sub updateSerial
 {
+ return	if $::CFG{randomSerial};
  my $s=readFile('serial');
  $s=~s/\s+$//;
  $::CFG{db}{pub}->do("Update CA Set Serial=? Where CN=?", undef, $s, $::CFG{ca});

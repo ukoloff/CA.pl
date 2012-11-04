@@ -9,7 +9,7 @@ print "Primary request...\n";
 openSSL(qw(req -new -x509 -set_serial 0), {config=>'conf', key=>'key', out=>'ca.crt'});
 
 writeFile('index', '');
-writeFile('serial', '00');
+writeFile('serial', randomSerial||'00');
 writeFile('ca.key', readFile('key'));
 
 print "Final signing...\n";
