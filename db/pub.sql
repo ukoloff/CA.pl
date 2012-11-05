@@ -4,7 +4,7 @@ Create Table Certs(
  Key	Integer,
  ctime	DateTime Default CURRENT_TIMESTAMP,
  Revoke	DateTime,
- revokeReson	Text,
+ revokeReason	Text,
  BLOB	Text
 );
 
@@ -31,6 +31,7 @@ Create Table CA(
  ctime	DateTime Default CURRENT_TIMESTAMP,
  x509	Integer,
  serial	VarChar(15) Default '01',
+ crlSigner	Integer,
  Notes	Text
 );
 
