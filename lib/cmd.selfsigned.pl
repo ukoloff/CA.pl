@@ -5,11 +5,13 @@
 print "Generating key...\n";
 newKey();
 
+$Serial=randomSerial||'00';
+
 print "Primary request...\n";
-openSSL(qw(req -new -x509 -set_serial 0), {config=>'conf', key=>'key', out=>'ca.crt'});
+openSSL(qw(req -new -x509 -set_serial), "0x$Serial", {config=>'conf', key=>'key', out=>'ca.crt'});
 
 writeFile('index', '');
-writeFile('serial', randomSerial||'00');
+writeFile('serial', $Serial);
 writeFile('ca.key', readFile('key'));
 
 print "Final signing...\n";
