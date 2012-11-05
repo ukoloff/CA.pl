@@ -32,7 +32,7 @@ Create Table CA(
  x509	Integer,
  serial	VarChar(15) Default '01',
  crlSigner	Integer,
- crlNo	Integer Default 1,
+ crlNo	VarChar(15) Default '01',
  Notes	Text
 );
 
