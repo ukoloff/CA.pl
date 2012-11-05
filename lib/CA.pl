@@ -49,28 +49,35 @@ sub Job
  my $z=tLoad('0');
  tExpand($z);
  $t->prepend($z);
- $t->fromHash({'paths'=>{DIR=>$::CFG{tmp}}});
 
- $z=$t->copy;
- $z->expand;
- $z->dropEmptyVars;
- my $ca=$z->valueOf('ca');
- $ca	or die "CA not specified!\n";
- $::{CFG}{ca}=$ca;
+ $z=Template->new;
+ $z->fromHash({'paths'=>{DIR=>$::CFG{tmp}}});
+ $z->prepend($t);
+ $t=$z;
 
- $ca=tLoad("ca/$ca");
- tExpand($ca);
- $t->prepend($ca);
+ for my $var(qw(command ca))
+ {
+  $z=$t->copy;
+  $z->expand;
+  $z->dropEmptyVars;
+  my $val=$z->valueOf($var);
+  $val	or die "'$var=' not found in template!\n";
 
- $ca=tLoad("ca/0");
- tExpand($ca);
- $t->prepend($ca);
+  $z=tLoad("$var/$val");
+  tExpand($z);
+  $t->prepend($z);
+
+  $z=tLoad("$var/0");
+  tExpand($z);
+  $t->prepend($z);
+ }
 
  $t->expand;
  $t->dropEmptyVars;
 
  $::CFG{Job}=$t;
  $::{CFG}{command}=$t->valueOf('command');
+ $::{CFG}{ca}=$t->valueOf('ca');
 
  open $fh, '>', resolveFile('conf');
  $t->print($fh);
