@@ -35,5 +35,3 @@ Create Table CA(
  crlNo	VarChar(15) Default '01',
  Notes	Text
 );
-
-Create Index iCN On CA(CN);
