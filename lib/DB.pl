@@ -1,21 +1,39 @@
 use strict;
 use DBI;
 
-foreach my $x(qw(pub sec))
+my $DB="$::CFG{root}/db";
+-d $DB	or	mkdir $DB	or die "Cannot create '$DB'!\n";
+
+my %DBs;
+
+foreach my $f(glob("$::CFG{root}/schema/*.sql"))
 {
- my $p="$::CFG{root}/db/$x";
- -d $p	or mkdir $p;
- my $f="$p/$x.db";
- my $z=DBI->connect("dbi:SQLite:$f");
- $::CFG{db}{$x}=$z;
- next	if 2<scalar $z->tables;
- my @stat=stat $p;
-# chown $stat[4], $stat[5], $f;
- open F, '<', "$p.sql";
- $z->do($_)	foreach split(/;\s*\n/, join('', <F>));
- close F;
+ my $db=basename($f);
+ $db=~s/[.].*//;
+ $DBs{$db}={mode=>0777, files=>[]}	unless $DBs{$db};
+ $DBs{$db}{mode}&=(stat $f)[2];
+ push @{$DBs{$db}{files}}, $f;
 }
 
-chmod 0700, "$::CFG{root}/db/sec";
+foreach my $f(keys %DBs)
+{
+ my $p="$DB/$f";
+ -d $p	or mkdir $p	or die "Cannot create '$p'!\n";
+ chmod(($DBs{$f}{mode}>>2)& 0111 | $DBs{$f}{mode}, $p);
+
+ my $z=DBI->connect("dbi:SQLite:$p/$f.db");
+ $::CFG{db}{$f}=$z;
+ next	if 2<scalar $z->tables;
+
+ foreach my $q(@{$DBs{$f}{files}})
+ {
+  open F, '<', $q;
+  $z->do($_)	foreach split(/;\s*\n/, join('', <F>));
+  close F;
+ }
+}
+
+undef %DBs;
+undef $DB;
 
 1;
