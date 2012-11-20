@@ -23,9 +23,10 @@ $::{CFG}{db}{pub}->do("Insert Into Certs(Key, Issuer, BLOB) Values(?, (Select id
 my $crtN=$::CFG{db}{pub}->sqlite_last_insert_rowid;
 storeAttrs($crtN);
 
-my @Sep=qw(- - T : :);
+my @Sep=qw(20 - - T : :);
 my $ctime=$::CFG{db}{pub}->selectrow_arrayref("Select datetime(?)", undef,
-    '20'.join('', map {$_.shift(@Sep)} unpack('(A2)6', $::CFG{db}{pub}->selectrow_arrayref("Select notBefore From Attrs Where id=?", undef, $crtN)->[0])))->[0];
+    join('', map {shift(@Sep), $_}
+	unpack('(A2)6', $::CFG{db}{pub}->selectrow_arrayref("Select notBefore From Attrs Where id=?", undef, $crtN)->[0])))->[0];
 $ctime
     and $::CFG{db}{pub}->do("Update Certs Set ctime=? Where id=?", undef, $ctime, $crtN)
     and $::CFG{db}{sec}->do("Update Keys Set ctime=? Where id=?", undef, $ctime, $keyN);
