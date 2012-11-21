@@ -24,9 +24,10 @@ my $crtN=$::CFG{db}{pub}->sqlite_last_insert_rowid;
 storeAttrs($crtN);
 
 my @Sep=qw(20 - - T : :);
-my $ctime=$::CFG{db}{pub}->selectrow_arrayref("Select datetime(?)", undef,
-    join('', map {shift(@Sep), $_}
-	unpack('(A2)6', $::CFG{db}{pub}->selectrow_arrayref("Select notBefore From Attrs Where id=?", undef, $crtN)->[0])))->[0];
+my $ctime=$::CFG{db}{pub}->selectrow_arrayref("Select notBefore From Attrs Where id=?", undef, $crtN)->[0];
+$ctime=join('', map {shift(@Sep), $_} unpack('(A2)6', $ctime));
+$ctime=$::CFG{db}{pub}->selectrow_arrayref("Select datetime(?)", undef, $ctime)->[0];
+
 $ctime
     and $::CFG{db}{pub}->do("Update Certs Set ctime=? Where id=?", undef, $ctime, $crtN)
     and $::CFG{db}{sec}->do("Update Keys Set ctime=? Where id=?", undef, $ctime, $keyN);
