@@ -38,7 +38,7 @@ sub randomSerial
  my $x=$::CFG{db}{pub}->prepare("Select Count(*) From Attrs Where serial=?");
  while(1)
  {
-  my $s=substr(randomHash, -2*$n);
+  my $s=substr(randomHash(), -2*$n);
   $x->execute($s);
   return $s	unless $x->fetchrow_arrayref->[0];
  }
@@ -75,7 +75,7 @@ sub newKey
 
 sub genPass
 {
- return substr(randomHash(), -8);
+ return substr(randomHash(), -12);
 }
 
 sub storeKey
@@ -142,13 +142,25 @@ sub storeAttrs
 
  $::CFG{db}{pub}->do("Insert Or Replace Into Attrs(id, serial, subj, email, SHA1, notBefore, notAfter) Values(?,?,?,?,?,?,?)", undef,
     $N, $Attrs{serial}, $Attrs{subject}, $Attrs{email}, $Attrs{fingerprint}, $Attrs{notBefore}, $Attrs{notAfter});
+
+ return unless $_[0];
+
+ my @Sep=qw(20 - - T : :);
+  my $ctime=join('', map {shift(@Sep), $_} unpack('(A2)6', $Attrs{notBefore}));
+ $ctime=$::CFG{db}{pub}->selectrow_arrayref("Select datetime(?)", undef, $ctime)->[0];
+ return	unless $ctime;
+
+ $::CFG{db}{pub}->do("Update Certs Set ctime=? Where id=?", undef, $ctime, $N);
+ my $K=$::CFG{db}{pub}->selectrow_arrayref("Select Key From Certs Where id=?", undef, $N)->[0];
+ $K	and $::CFG{db}{sec}->do("Update Keys Set ctime=? Where id=?", undef, $ctime, $K);
+
 }
 
 sub storeNewAttrs
 {
  my $s=$::CFG{db}{pub}->prepare("Select id From Certs Where id Not in(Select id From Attrs)");
  $s->execute();
- while(my @r=$s->fetchrow_array){ storeAttrs($r[0]); }
+ while(my @r=$s->fetchrow_array){ storeAttrs($r[0], $_[0]); }
 }
 
 sub storeCA
