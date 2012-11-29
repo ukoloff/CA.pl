@@ -36,17 +36,6 @@ $::{CFG}{db}{sec}->do("Insert Into Keys(BLOB) Values(?)", undef, readFile('key')
 $A{key}=$::CFG{db}{sec}->sqlite_last_insert_rowid;
 $::{CFG}{db}{pub}->do("Insert Into Certs(Key, Issuer, BLOB) Values(?, ?, ?)", undef, $A{key}, $A{i}, readFile('crt'));
 $A{N}=$::CFG{db}{pub}->sqlite_last_insert_rowid;
-storeAttrs($A{N});
-
-print "Adjust ctime...\n";
-
-my @Sep=qw(20 - - T : :);
-my $ctime=$::CFG{db}{pub}->selectrow_arrayref("Select notBefore From Attrs Where id=?", undef, $A{N})->[0];
-$ctime=join('', map {shift(@Sep), $_} unpack('(A2)6', $ctime));
-$ctime=$::CFG{db}{pub}->selectrow_arrayref("Select datetime(?)", undef, $ctime)->[0];
-
-$ctime
-    and $::CFG{db}{pub}->do("Update Certs Set ctime=? Where id=?", undef, $ctime, $A{N})
-    and $::CFG{db}{sec}->do("Update Keys Set ctime=? Where id=?", undef, $ctime, $A{key});
+storeAttrs($A{N}, 1);
 
 1;
