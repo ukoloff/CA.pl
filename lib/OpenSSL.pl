@@ -75,7 +75,7 @@ sub newKey
 
 sub genPass
 {
- return substr(randomHash(), -12);
+ return substr(randomHash64(), -12);
 }
 
 sub storeKey

@@ -104,7 +104,7 @@ sub pfxExport
  }
  elsif(!$pass)
  {
-  $pass=substr(randomHash(), -8);
+  $pass=substr(randomHash64(), -8);
   print "PFX will be encrypted with '$pass' password.\n";
  }
  writeFile('pfxPass', $pass);
