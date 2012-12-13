@@ -12,6 +12,15 @@ if(length($::CFG{web}{u}))
  $dn=u2dn($::CFG{web}{u})	or die "User not found!\n";
 }
 
+# Check for duplicates
+$::CFG{db}{pub}->selectrow_arrayref(<<SQL, undef, dn2u($dn)->[0])->[0]	and die "Duplicate certificate!\n";
+Select Count(*)
+From Certs, User
+Where u=? And User.id=Certs.id
+And (Revoke is Null Or revokeReason='certificateHold')
+And Issuer=(Select x509 From CA, Ini Where Name='userCA' And Value=CA.id)
+SQL
+
 my $e=$::CFG{AD}{h}->search(base=>$dn, scope=>'base',
  filter=>'(&(mail=*)(userPrincipalName=*)(!(UserAccountControl:1.2.840.113556.1.4.803:=2)))',
  attrs=>['cn', 'mail', 'userPrincipalName'])->entry(0);
