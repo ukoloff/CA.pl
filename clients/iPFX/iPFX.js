@@ -31,6 +31,14 @@ Ajax.send('blob=?');
 WScript.Echo('3) PFX='+(''+Ajax.responseText).length);
 WScript.Echo('3) ForceRO='+!!Ajax.getResponseHeader('X-ForceRO'));
 WScript.Echo('3) u='+Ajax.getResponseHeader('X-U'));
+var logKey=Ajax.getResponseHeader('X-Log-Key');
+WScript.Echo('3) Log='+logKey);
+
+Ajax.open('POST', URL, false);
+Ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+Ajax.setRequestHeader('X-Log-Key', logKey);
+Ajax.send('log=Ok.'); 
+//Ajax.send('log=-'); 
 
 function X3(){
  try{ return new ActiveXObject("Msxml2.XMLHTTP");}catch(e){};

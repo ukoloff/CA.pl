@@ -1,4 +1,4 @@
 <?
-foreach(explode(' ', 'url blob')as $x) if(isset($_POST[$x])) { LoadLib($x); exit; }
+foreach(explode(' ', 'url blob log')as $x) if(isset($_POST[$x])) { LoadLib($x); exit; }
 exit;
 ?>
