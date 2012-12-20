@@ -1,6 +1,6 @@
 <?
 Header('Content-Type: application/vnd.ms-excel');
-Header('Content-Disposition: attachment; filename="users.xls"');
+Header('Content-Disposition: attachment; filename="pki.xls"');
 ?>
 <Table Border><!--
 Select *<?=$CFG->SQL?>
