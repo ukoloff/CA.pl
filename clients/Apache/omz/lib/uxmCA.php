@@ -33,6 +33,7 @@ function caDB()
 
 function crlUpdate()
 {
+ global $CFG;
  if(!$CFG->Auth) return;
  $db=caDB();
  if($db->querySingle("Select datetime('now', '-6 hours')<(Select Value From Ini Where Name='userCRL')")) return;

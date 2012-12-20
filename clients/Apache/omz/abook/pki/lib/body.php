@@ -21,7 +21,7 @@ while($r=$x->fetchArray(SQLITE3_ASSOC)):
  if($A) $A="<span onMouseMove=\"userThumb(this, ".jsEscape($r[u]).")\"><A hRef='/omz/$A/.?u=".urlencode($r[u])."' Target='user'>";
  if($R=$r[Revoke])$R.="\n".$r[revokeReason];
  if($R=trim($R))$R=' Title="'.htmlspecialchars($R).'"';
- 
+
  echo "<TR>",
     '<TD><A hRef="./', htmlspecialchars(hRef('ca', $r[caId])), '">', $r[CN], "</A><BR /></TD>",
     '<TD><A hRef="./?x&n=', $r[id], '" Target="crt">', substr($r[serial], 0, 8), strlen($r[serial])>8?'...':'', "</A><BR /></TD>",
@@ -36,6 +36,6 @@ endwhile;
 <?
 $CFG->params->p=$p0;
 pageNavigator();
-?>
 
-<? LoadLib('crl'); ?>
+crlUpdate();
+?>
