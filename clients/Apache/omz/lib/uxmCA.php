@@ -31,4 +31,12 @@ function caDB()
  return new SQLite3('/home/uxmCA/db/pub/pub.db');
 }
 
+function crlUpdate()
+{
+ if(!$CFG->Auth) return;
+ $db=caDB();
+ if($db->querySingle("Select datetime('now', '-6 hours')<(Select Value From Ini Where Name='userCRL')")) return;
+ caExec(Array(command=>'crl', auth=>1));
+}
+
 ?>
