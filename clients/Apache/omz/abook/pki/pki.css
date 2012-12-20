@@ -1,0 +1,12 @@
+Form {
+ border: 1px solid black;
+}
+
+Form A	{
+ text-decoration: none;
+ font-family: monospace;
+}
+
+#EmptyFilter {
+ display: none;
+}
