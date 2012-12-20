@@ -36,11 +36,12 @@ SQL
  $r=$s->execute();
  while($z=$r->fetchArray(SQLITE3_ASSOC)):
   if($z[Active] and $z[ActiveCA]) $CFG->pki->Found++;
-  if(!$z[Rvk])$z[rR]='';
-//echo "<!--"; print_r($z); echo "-->";
+  if($R=$z[Rvk])$R.="\n".$z[rR];
+  if($R=trim($R))$R=' Title="'.htmlspecialchars($R).'"';
+
   echo '<TR><TD><A hRef="/omz/abook/pki/?n=', $z[id], '">',  htmlspecialchars($z[serial]), '</A>',
     "<BR /></TD><TD><small>", str_replace('=', '=<WBR>', str_replace('/', '<WBR>/', htmlspecialchars($z[subj]))),
-    '<BR /></small></TD><TD title="', htmlspecialchars($z[Rvk]), "\n", htmlspecialchars($z[rR]), '">', htmlspecialchars(preg_replace('/\s.*/', '', $z[Rvk])),
+    "<BR /></small></TD><TD$R>", htmlspecialchars(preg_replace('/\s.*/', '', $z[Rvk])),
     "<BR /></TD></TR>\n";
  endwhile;
 }
