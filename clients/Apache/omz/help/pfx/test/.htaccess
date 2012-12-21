@@ -1,0 +1,8 @@
+#SSLVerifyClient	require
+SSLVerifyClient	optional_no_ca
+#SSLVerifyClient	optional
+#SSLVerifyDepth	1
+#SSLOptions +StdEnvVars +ExportCertData +OptRenegotiate
+SSLOptions +StdEnvVars +ExportCertData
+#SSLRequireSSL
+
