@@ -1,6 +1,6 @@
 <TextArea Rows='21' ReadOnly AutoFocus Style='width: 100%;'>
 <?
-$x=proc_open("/usr/bin/openssl x509 -noout -text", Array(Array('pipe', 'r'), Array('pipe', 'w')),  $pipes);
+$x=proc_open("{$CFG->OpenSSL} x509 -noout -text", Array(Array('pipe', 'r'), Array('pipe', 'w')),  $pipes);
 
 $s=$CFG->db->prepare('Select BLOB From Certs Where id=:n');
 $s->bindValue(':n', $CFG->params->n);
