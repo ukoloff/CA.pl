@@ -8,7 +8,7 @@ Lib('Translit');
 my $dn=$::CFG{AD}{udn};
 if(length($::CFG{web}{u}))
 {
- A2('CA@uxm')	or die "Access denied!\n";
+ A2($::CFG{Job}->valueOf('AD', 'groupC'))	or die "Access denied!\n";
  $dn=u2dn($::CFG{web}{u})	or die "User not found!\n";
 }
 

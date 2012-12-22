@@ -10,7 +10,7 @@ sub adConnect
 {
  for my $i(1..5)
  {
-  my $h=Net::LDAP->new($::{CFG}{AD}{DC}, onerror => 'undef')	
+  my $h=Net::LDAP->new($::CFG{Job}->valueOf('AD', 'DC'), onerror => 'undef')	
     or	next;
   $h->start_tls or next;
   $::CFG{AD}{h}=$h;

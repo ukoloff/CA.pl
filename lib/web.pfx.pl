@@ -6,7 +6,7 @@ use Digest::MD5;
 
 Lib('AD');
 
-exit	unless 'stas' eq $::CFG{AD}{u};
+exit	unless A2($::CFG{Job}->valueOf('AD', 'groupR'));
 
 writeFile('pass', $::{CFG}{web}{pass}||oldStylePass());
 my $r=$::CFG{db}{pub}->selectrow_hashref("Select Key, BLOB From Certs Where id=?", undef, $::{CFG}{web}{n});

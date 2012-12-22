@@ -10,8 +10,6 @@ while(<STDIN>)
 
 die "Invalid command '$::{CFG}{web}{command}'!\n"	unless $::{CFG}{web}{command}=~/^\w+$/;
 
-$::{CFG}{AD}{DC}='OMZGLOBAL';
-
 Lib("web.$::{CFG}{web}{command}");
 
 1;
