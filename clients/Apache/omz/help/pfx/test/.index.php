@@ -33,7 +33,7 @@ $r=$s->execute()->fetchArray(SQLITE3_ASSOC);
 <Table Border Width='100%' CellSpacing='0'>
 <ColGroup Align='Right'>
 <TR><TH>№</TH><TD><?=htmlspecialchars($_SERVER[SSL_CLIENT_M_SERIAL])?><BR /></TD></TR>
-<TR><TH>DN</TH><TD><?=htmlspecialchars($_SERVER[SSL_CLIENT_S_DN])?><BR /></TD></TR>
+<TR><TH>DN</TH><TD><?=strtr(htmlspecialchars($_SERVER[SSL_CLIENT_S_DN]), Array('/'=>'<wbr>/'))?><BR /></TD></TR>
 <TR><TH>u</TH><TD><?=htmlspecialchars($r[u])?><? if($r[id]) echo "\n<A hRef='/omz/abook/pki/?x&n={$r[id]}'>&raquo;</A>";?><BR /></TD></TR>
 </Table>
 <H2>NB</H2>
@@ -45,19 +45,18 @@ $r=$s->execute()->fetchArray(SQLITE3_ASSOC);
 <? if(preg_match('/Windows/i', $_SERVER[HTTP_USER_AGENT])): ?>
 <BR />
 &raquo;
-Вы можете <A hRef='../x509test.js'>открыть эту страницу</A>
+<![if !IE]>
+Вы можете <A hRef='../x509test.vbs'>открыть эту страницу</A>
 в Microsoft Internet Explorer, чтобы увидеть, установлен ли сертификат в хранилище Windows
-<? endif; ?>
-<!--[if IE ]>
-<BR />
-&raquo;
+<![endif]>
+<!--[if IE]>
 Чтобы повторить попытку авторизации, в свойствах Интернет на вкладке "Содержание" нажмите кнопку "Очистить SSL" и обновите страницу.
-Или <A hRef='#' onClick='clearSSL()'>нажмите сюда</A>.
-<Script><!-- // http://unmitigatedrisk.com/?p=13
+Или <A hRef='./' onClick="clearSSL()">нажмите сюда</A>.
+<Script>// http://unmitigatedrisk.com/?p=13
 function clearSSL()
 {
  document.execCommand('ClearAuthenticationCache', false);
- location.reload();
 }
-//--></Script>
+</Script>
 <![endif]-->
+<? endif; ?>
