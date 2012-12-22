@@ -25,6 +25,7 @@ if(isset($_GET[chain])):
   fwrite($f, $r[1]);
  endwhile;
 endif;
+fclose($f);
 
 passthru("{$CFG->OpenSSL} crl2pkcs7 -nocrl -certfile $t");
 unlink($t);
