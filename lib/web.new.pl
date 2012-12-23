@@ -69,6 +69,8 @@ $::CFG{db}{pub}->do("Update Ini Set Value=? Where Name='userCA'", undef, $idCA);
 
 my $crtN=putCA();
 
+Lib('Errors2');
+
 #print "Generating key...\n";
 newKey();
 
