@@ -10,6 +10,8 @@ if(!$r):
  exit;
 endif;
 
+$CFG->OpenSSL=$CFG->db->querySingle("Select Value From Ini Where Name='OpenSSL'");
+
 $CFG->params->n=$n;
 if(isset($_GET[x]))return LoadLib('x');
 

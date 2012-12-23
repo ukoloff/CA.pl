@@ -1,7 +1,5 @@
 <?
 
-$CFG->OpenSSL='/usr/bin/openssl';
-
 function caExec($args)
 {
  $args=func_get_args();
