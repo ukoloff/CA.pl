@@ -64,7 +64,7 @@ foreach($CFG->ops as $k=>$v)
     echo '<Option Value="', htmlspecialchars($k), '"', $k==$q->o? 'Selected':'', '>', htmlspecialchars($v), "\n";
 ?>
 </Select>
-<Input Value="<?=htmlspecialchars($q->v)?>">
+<Input Type='Search' Value="<?=htmlspecialchars($q->v)?>" />
 
 </Div><?
 }
