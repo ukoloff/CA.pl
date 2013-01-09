@@ -4,7 +4,7 @@ LoadLib('db');
 $i=getLogId();
 $Err=$_POST['log'];
 $Err='-'==$Err?'NULL':"'".AddSlashes($Err)."'";
-mysql_query("Insert Into uxmJournal.pfx12(Op, Parent, IP, Error) Values('i', $i, $CFG->IP, $Err)");
+mysql_query("Insert Into uxmJournal.pfx(Op, Parent, IP, Error) Values('i', $i, $CFG->IP, $Err)");
 
 function getLogId()
 {

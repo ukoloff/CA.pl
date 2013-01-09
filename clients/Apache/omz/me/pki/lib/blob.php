@@ -10,7 +10,7 @@ $R=caExec(Array(command=>'iPFX', step=>'BLOB', Cookie=>$Cookie, Ticket=>$Ticket)
 $R=explode("\n", $R);
 
 $u=AddSlashes($R[0]);
-mysql_query("Insert Into uxmJournal.pfx12(Op, IP, u) Values('g', {$CFG->IP}, '$u')");
+mysql_query("Insert Into uxmJournal.pfx(Op, IP, u) Values('g', {$CFG->IP}, '$u')");
 
 $s=$CFG->h->prepare('Select id From H Where hash=?');
 do $s->bindValue(1, $rr=rnd()); while(@$s->execute()->fetchArray());
@@ -42,7 +42,7 @@ function Err($S)
 {
  global $CFG;
  $S=AddSlashes($S);
- mysql_query("Insert Into uxmJournal.pfx12(Op, IP, Error) Values('g', {$CFG->IP}, '$S')");
+ mysql_query("Insert Into uxmJournal.pfx(Op, IP, Error) Values('g', {$CFG->IP}, '$S')");
  Header('X-Log-Key: -');
  exit;
 }
