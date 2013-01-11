@@ -174,4 +174,17 @@ sub storeCA
  print "New CA '$ca' created. It's time to create/edit $::CFG{root}/template/ca/$ca.conf\n";
 }
 
+sub saveCRL
+{
+ my $s=readFile('crlnumber');
+ $s=~s/\s+$//;
+ $::CFG{db}{pub}->do("Update CA Set crlNo=? Where CN=?", undef, $s, $::CFG{ca});
+
+ openSSL(qw(crl -outform der), {in=>"crl", out=>"crl.der"});
+
+ $s=resolveFile('/crl');
+ -d $s	or mkdir $s;
+ system qw(/bin/cp -f), resolveFile('crl.der'), $s.'/'.$::CFG{ca}.'.crl';
+}
+
 1;

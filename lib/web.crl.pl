@@ -4,7 +4,7 @@
 
 Lib('AD');	# Any valid user accepted
 Lib('Detach');	# Go to background
-
+Lib('Errors2');
 # DoS check
 exit	if $::CFG{db}{pub}->selectrow_arrayref("Select datetime('now', '-1 hour')<(Select Value From Ini Where Name='userCRL')")->[0];
 
@@ -84,7 +84,7 @@ foreach my $CA(@$s)
  $t->dropEmptyVars;
 
  $::CFG{Job}=$t;
- $::{CFG}{ca}=$CA;
+ $::CFG{ca}=$CA;
 
  open $fh, '>', resolveFile($CA);
  $t->print($fh);
@@ -126,13 +126,7 @@ SQL
  }
  close $fh;
 
- openSSL(qw(ca -gencrl), {config=>$CA, out=>"$CA.crl"});
- my $p=resolveFile('/export');
- -d $p	or mkdir $p;
- openSSL(qw(crl -outform der), {in=>"$CA.crl", out=>"/export/$CA.crl"});
-
- $s=readFile('crlnumber');
- $s=~s/\s+$//;
- $::CFG{db}{pub}->do("Update CA Set crlNo=? Where CN=?", undef, $s, $CA);
+ openSSL(qw(ca -gencrl), {config=>$CA, out=>"crl"});
+ eval{ saveCRL(); }
 }}
 1;

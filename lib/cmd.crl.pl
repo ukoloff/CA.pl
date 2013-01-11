@@ -42,14 +42,7 @@ close $fh;
 #writeFile('index.attr', '');
 
 openSSL(qw(ca -gencrl), {config=>'conf', out=>'crl'});
-my $p=resolveFile('/export');
--d $p	or mkdir $p;
-openSSL(qw(crl -outform der), {in=>'crl', out=>"/export/$::CFG{ca}.crl"});
-
+saveCRL();
 print "Created $::CFG{ca}.crl\n";
-
-$s=readFile('crlnumber');
-$s=~s/\s+$//;
-$::CFG{db}{pub}->do("Update CA Set crlNo=? Where CN=?", undef, $s, $::CFG{ca});
 
 1;

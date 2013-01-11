@@ -76,8 +76,8 @@ sub Job
  $t->dropEmptyVars;
 
  $::CFG{Job}=$t;
- $::{CFG}{command}=$t->valueOf('command');
- $::{CFG}{ca}=$t->valueOf('ca');
+ $::CFG{command}=$t->valueOf('command');
+ $::CFG{ca}=$t->valueOf('ca');
 
  open $fh, '>', resolveFile('conf');
  $t->print($fh);
