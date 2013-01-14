@@ -1,0 +1,32 @@
+// Установка сертификатов v1
+JS='C:\Temp\Test\CA.js'
+
+Z=CreateObject('ScriptControl')
+Z.Language='JScript'
+Z.AddCode(ReadFile(JS))
+
+Z.Run('initCrt';  Application; JS)
+While Z.Eval('moreCrt()')
+ Crt=Z.Eval('getCrt()')
+// MessageBox(Crt.u; Crt.СодержаниеТ2)
+
+ POL=Application.ReferencesFactory.ПОЛ.GetObjectByCode(Crt.Kod)
+ CER=POL.DetailDataSet(2)
+
+ Events = CER.Events
+ Events.AddCheckPoint()
+ Events.Events(9/*dseBeforeInsert*/).Enabled = false
+ CER.Append()
+ Events.ReleaseCheckPoint()
+
+ CER.ISBStartObjectName=Crt.ISBStartObjectName
+ CER.СтрокаТ2=Crt.СтрокаТ2
+ CER.СодержаниеТ2=Crt.СодержаниеТ2
+ CER.Requisites('ТекстТ2').LoadFromFile(Crt.ТекстТ2)
+ CER.ISBCertificateInfo=Crt.ISBCertificateInfo
+ CER.ISBCertificateType=Crt.ISBCertificateType
+ CER.ISBDefaultCert=Crt.ISBDefaultCert
+ CER.СостояниеТ2=Crt.СостояниеТ2
+ POL.Save()
+
+EndWhile
