@@ -113,6 +113,7 @@ From Certs, Attrs, CA
 Where CA.CN=?
 And Certs.Issuer=CA.x509 And Certs.id=Attrs.id
 And Revoke is not Null
+And notAfter>substr(strftime('%Y%M%d%H%M%SZ'), 3)
 SQL
  $s->execute($CA);
  while(my $r=$s->fetchrow_hashref)
