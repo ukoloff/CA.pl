@@ -4,7 +4,7 @@
 
 Lib('AD');	# Any valid user accepted
 Lib('Detach');	# Go to background
-Lib('Errors2');
+
 # DoS check
 exit	if $::CFG{db}{pub}->selectrow_arrayref("Select datetime('now', '-1 hour')<(Select Value From Ini Where Name='userCRL')")->[0];
 
@@ -128,6 +128,7 @@ SQL
  close $fh;
 
  openSSL(qw(ca -gencrl), {config=>$CA, out=>"crl"});
- eval{ saveCRL(); }
-}}
+ eval{ saveCRL(); };
+}};
+
 1;

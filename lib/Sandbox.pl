@@ -58,6 +58,7 @@ sub writeFile
 }
 
 END{
+ return	if $::CFG{keepSandbox};
  unlink	while glob "$::CFG{tmp}*";
  rmdir $::CFG{tmp};
 }

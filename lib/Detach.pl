@@ -6,7 +6,7 @@ if(not -t STDOUT)
  open STDERR, '>', '/dev/null';
 }
 
-fork	and exit;
+fork	and $::CFG{keepSandbox}=1, exit;
 #setsid;
 
 1;
