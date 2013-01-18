@@ -5,7 +5,8 @@ $CFG->pki->db=caDB();
 
 $groupC=$CFG->pki->db->querySingle("Select Value From Ini Where Name='groupC'");
 
-$CFG->pki->Creator=$CFG->params->u? inGroupX($groupC) : 0;	# 1 to allow self-generation
+$CFG->pki->xCreator=inGroupX($groupC);
+$CFG->pki->Creator=$CFG->params->u? $CFG->pki->xCreator : 0;	# 1 to allow self-generation
 $CFG->pki->u=$CFG->params->u;
 if(!$CFG->pki->u)$CFG->pki->u=$CFG->u;
 

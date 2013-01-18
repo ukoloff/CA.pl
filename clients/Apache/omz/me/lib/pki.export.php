@@ -1,7 +1,7 @@
 <?// Добавить точно такую же вкладку в любом другом месте
-if('stas'!=$CFG->u) return;
+//if('stas'!=$CFG->u) return;
 
-$CFG->tabs[preg_replace('/\..*/', '', basename(__FILE__))]='ЭЦП!';
+$CFG->tabs[preg_replace('/\..*/', '', basename(__FILE__))]='ЭЦП';
 
 foreach(glob(dirname(__FILE__).'/'.preg_replace('/\..*\./', '*', basename(__FILE__))) as $f):
  if(__FILE__==$f) continue;

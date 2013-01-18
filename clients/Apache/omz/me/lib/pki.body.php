@@ -38,7 +38,7 @@ SQL
   if($R=$z[Rvk])$R.="\n".$z[rR];
   if($R=trim($R))$R=' Title="'.htmlspecialchars($R).'"';
 
-  echo '<TR><TD><A hRef="/omz/abook/pki/?n=', $z[id], '">',  htmlspecialchars($z[serial]), '</A>', ($z[Active]&&$z[ActiveCA]?'&oplus;':''),
+  echo '<TR><TD><A hRef="/omz/abook/pki/?n=', $z[id], $CFG->pki->xCreator?'&amp;x':'','">',  htmlspecialchars($z[serial]), '</A>', ($z[Active]&&$z[ActiveCA]?'&oplus;':''),
     "<BR /></TD><TD><small>", str_replace('=', '=<WBR>', str_replace('/', '<WBR>/', htmlspecialchars($z[subj]))),
     "<BR /></small></TD><TD$R>", htmlspecialchars(preg_replace('/\s.*/', '', $z[Rvk])),
     "<BR /></TD></TR>\n";
