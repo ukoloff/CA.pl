@@ -2,8 +2,8 @@
 # Update CRL(s) for user certificates
 #
 
-Lib('AD');	# Any valid user accepted
 Lib('Detach');	# Go to background
+Lib('AD');	# Any valid user accepted
 
 # DoS check
 exit	if $::CFG{db}{pub}->selectrow_arrayref("Select datetime('now', '-1 hour')<(Select Value From Ini Where Name='userCRL')")->[0];
