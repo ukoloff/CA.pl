@@ -15,6 +15,8 @@ function getCrt()
 
 function initCrt(App, JS)
 {
+ noCRL();
+
  var SQL=goSQL(App.Connection.ServerName, App.Connection.DatabaseName, JS);
 
  var Ajax=new ActiveXObject("Msxml2.XMLHTTP");
@@ -194,6 +196,13 @@ function getSys()
   return n;
  }
  return R;
+}
+
+function noCRL()
+{
+ new ActiveXObject("WScript.Shell").
+    RegWrite('HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\\CertificateRevocation',
+    0, 'REG_DWORD');
 }
 
 // SQL

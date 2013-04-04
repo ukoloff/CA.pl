@@ -8,6 +8,7 @@ var Server='Directum';
 var DB='Directum';
 
 WScript.Echo('Getting CSV...');
+noCRL();
 
 var Ajax=new ActiveXObject("Msxml2.XMLHTTP");
 Ajax.open('GET', URL+'?q=r@;u!@&sort=C&as=csv', false);
@@ -211,6 +212,13 @@ function getSys()
   return n;
  }
  return R;
+}
+
+function noCRL()
+{
+ new ActiveXObject("WScript.Shell").
+    RegWrite('HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\\CertificateRevocation',
+    0, 'REG_DWORD');
 }
 
 // SQL
