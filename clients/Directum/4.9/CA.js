@@ -20,7 +20,7 @@ function initCrt(App, JS)
  var SQL=goSQL(App.Connection.ServerName, App.Connection.DatabaseName, JS);
 
  var Ajax=new ActiveXObject("Msxml2.XMLHTTP");
- Ajax.open('GET', URL+'?q=r@;u!@&sort=C&as=csv', false);
+ Ajax.open('GET', URL+'?q=r@;u!@&sort=C&as=csv&rnd='+rnd(), false);
  Ajax.send();
  var Q=namedCSV(parseCSV(Ajax.responseText));
 
