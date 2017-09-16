@@ -19,9 +19,6 @@ foreach($r as $k=>$v)
 <LI><A hRef="./?as=der&n=<?=$CFG->params->n?>">der</A>
 <? if(!$CFG->Super) return; ?>
 <LI><A hRef="./?as=pem&n=<?=$CFG->params->n?>">pem</A>, <A hRef="./?chain&as=pem&n=<?=$CFG->params->n?>">+chain</A>
-<?
-for($pass=''; strlen($pass)<4; )$pass.=chr(rand(0, 9)+ord('0'));
-?>
-<LI><A hRef="./?as=pfx&n=<?=$CFG->params->n?>&pass=<?=$pass?>" Title="pass: <?=$pass?>">pfx</A>,
-<A hRef="./?chain&as=pfx&n=<?=$CFG->params->n?>&pass=<?=$pass?>" Title="pass: <?=$pass?>">+chain</A><? if(!$r[u]) return; ?>,
-<A hRef="./?as=pfx&n=<?=$CFG->params->n?>">old-style</A>
+<LI><A hRef="./?as=pfx&n=<?=$CFG->params->n?>">pfx</A>,
+<A hRef="./?chain&as=pfx&n=<?=$CFG->params->n?>">+chain</A><? if(!$r[u]) return; ?>,
+<A hRef="./?as=pfx&old&n=<?=$CFG->params->n?>">old-style</A>

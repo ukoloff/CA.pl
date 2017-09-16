@@ -8,7 +8,7 @@ Lib('AD');
 
 exit	unless A2($::CFG{Job}->valueOf('AD', 'groupR'));
 
-writeFile('pass', $::{CFG}{web}{pass}||oldStylePass());
+writeFile('pass', $::{CFG}{web}{old} ? oldStylePass() : $::{CFG}{web}{pass} || "\n");
 my $r=$::CFG{db}{pub}->selectrow_hashref("Select Key, BLOB From Certs Where id=?", undef, $::{CFG}{web}{n});
 my $f;
 open $f, '>', resolveFile('pem');
