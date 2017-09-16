@@ -3,7 +3,7 @@
 use strict;
 use File::Basename;
 
-$<	and die "Run $0 as root!\n";
+$< == (stat $0)[4] or die "Run $0 as @{[(getpwuid((stat $0)[4]))[0]]}!";
 
 $::CFG{0}=$0;
 $0=basename($0);

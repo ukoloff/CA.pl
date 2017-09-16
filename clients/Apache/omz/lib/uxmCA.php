@@ -17,7 +17,7 @@ function caExec($args)
   $Z[authPass]=base64_encode($_SERVER['PHP_AUTH_PW']);
  endif;
 
- $x=proc_open("/usr/bin/sudo /home/uxmCA/CA.pl -web", Array(Array('pipe', 'r'), Array('pipe', 'w')),  $pipes);
+ $x=proc_open("/usr/bin/sudo -u uxm-ca /home/uxmCA/CA.pl -web", Array(Array('pipe', 'r'), Array('pipe', 'w')),  $pipes);
  foreach($Z as $k=>$v)
   fwrite($pipes[0], "$k=$v\n");
  fclose($pipes[0]);
@@ -37,7 +37,7 @@ function crlUpdate()
  global $CFG;
  if(!$CFG->Auth) return;
  $db=caDB();
- if($db->querySingle("Select datetime('now', '-6 hours')<(Select Value From Ini Where Name='userCRL')")) return;
+ if($db->querySingle("Select datetime('now', '-27 hours')<(Select Value From Ini Where Name='userCRL')")) return;
  caExec(Array(command=>'crl', auth=>1));
 }
 

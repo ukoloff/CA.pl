@@ -1,1 +1,1 @@
-www-data	ALL = NOPASSWD: /home/uxmCA/CA.pl -web
+www-data	ALL = (uxm-ca) NOPASSWD: /home/uxmCA/CA.pl -web
