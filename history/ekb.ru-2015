@@ -1,0 +1,10 @@
+CN=ekb.ru
+template=WWW
+template.2=subjectAltName
+
+[AltName]
+DNS.2=*.<CN>
+
+[ req ]
+default_bits	= 2048
+default_md	= sha256

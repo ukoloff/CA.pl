@@ -1,0 +1,10 @@
+CN=<AltName::DNS.3>.ekb.ru
+template.1=subjectAltName
+template.2=WWW
+
+[AltName]
+DNS.2=<AltName::DNS.3>.uxm
+DNS.3=cacti
+
+[post]
+export=txt,pem
