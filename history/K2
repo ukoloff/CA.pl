@@ -1,0 +1,6 @@
+template.1=WWW
+template.2=subjectAltName
+CN=k2
+
+[AltName]
+DNS.2=<CN>.omzglobal.com

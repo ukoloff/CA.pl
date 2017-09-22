@@ -1,0 +1,17 @@
+CN=uxm
+template=CA
+command=selfsigned
+
+[sign]
+email_in_dn = yes
+
+[DN]
+emailAddress = root@ekb.ru
+
+[post]
+password=+
+export=pem,txt,der
+CA=uxm2017
+
+[ req ]
+default_bits    = 4096

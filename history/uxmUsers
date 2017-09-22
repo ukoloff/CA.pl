@@ -1,0 +1,12 @@
+CN=uxmUsers
+template=leafCA
+
+[sign]
+email_in_dn	= yes
+
+[DN]
+emailAddress=root@ekb.ru
+
+[post]
+password=
+export=pem,txt,der

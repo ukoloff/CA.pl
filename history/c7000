@@ -1,0 +1,12 @@
+command=sign
+CN=c7000.blade.uxm
+req=c7000.req
+template.1=subjectAltName
+
+[AltName]
+DNS.3=blade.uxm
+DNS.4=blade
+email=
+
+[post]
+export=crt,txt

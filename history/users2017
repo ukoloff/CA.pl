@@ -1,0 +1,17 @@
+CN=People@uxm
+template=leafCA
+
+[ req ]
+default_bits    = 4096
+
+
+[sign]
+email_in_dn     = yes
+
+[DN]
+emailAddress=root@ekb.ru
+
+[post]
+password=
+export=pem,txt,der
+ca=users2017
